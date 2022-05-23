@@ -4,7 +4,7 @@ import Technologies from "./Technologies";
 import Header from "./Header";
 
 
-const App = () => {
+function App() {
     return (
         <div>
             <Header/>

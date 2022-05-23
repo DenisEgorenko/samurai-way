@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const Header = () => {
+function Header() {
     return (
         <div>
             <a href="#">Home</a>
