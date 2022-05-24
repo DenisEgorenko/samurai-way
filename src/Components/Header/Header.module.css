@@ -1,0 +1,15 @@
+.header img{
+    height: 40px;
+    margin: 4px 0px 0px 460px;
+}
+
+.header{
+    height: 48px;
+    border-bottom: 1px solid lightgray;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white;
+
+
+}

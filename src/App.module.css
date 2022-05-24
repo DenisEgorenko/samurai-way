@@ -1,0 +1,31 @@
+.page_wrapper{
+    padding: 15px 0px 15px 0px;
+
+    margin: 49px auto 0px auto;
+    display: grid;
+    height: calc(100vh - 79px);
+    width: 1000px;
+    grid-template-columns: 150px 1fr;
+    grid-template-areas:
+            "nav content";
+    grid-gap: 15px;
+}
+
+
+
+.navbar_wrapper{
+
+}
+
+.content_wrapper{
+    border-radius: 10px;
+    background-color: white;
+}
+
+.app_wrapper{
+    background-color: #edeef0;
+}
+
+
+
+
