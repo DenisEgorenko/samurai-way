@@ -1,6 +1,9 @@
 .nav {
-
     grid-area: nav;
+}
+
+.item{
+    margin: 10px;
 }
 
 .item a{

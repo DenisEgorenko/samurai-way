@@ -1,12 +1,12 @@
 import React from "react";
 import Post from "./Post";
-import styles from "MyPosts.module.css"
+import styles from "./MyPosts.module.css"
 
 function MyPosts() {
     return (
         <div>
             My posts
-            <div>
+            <div className={styles.newPost}>
                 <textarea></textarea>
                 <button>Add post</button>
             </div>
@@ -15,8 +15,7 @@ function MyPosts() {
             <Post message="I'm learning React"/>
             <Post message="Hi"/>
             <Post message="Hi"/>
-            <Post message="Hi"/>
-            <Post message="Hi"/>
+
         </div>
     )
 }
