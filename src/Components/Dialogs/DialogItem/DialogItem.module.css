@@ -1,0 +1,42 @@
+.active_dialog{
+    border-right: 2px solid blue;
+}
+
+
+.dialog_item{
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+            "img name"
+            "img lm";
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}
+
+
+.dialog_item img{
+    grid-area: img;
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    object-position: 0 0;
+    border-radius: 50px;
+    margin: 5px;
+
+}
+
+.name{
+    grid-area: name;
+    font-weight: bold;
+    align-self: start;
+    margin: 5px 0 0 5px;
+}
+
+.last_message{
+    grid-area: lm;
+    align-self: start;
+    margin: 5px 0 0 5px;
+}

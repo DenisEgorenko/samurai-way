@@ -1,0 +1,8 @@
+.dialogs{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.dialog_items{
+    border-right: 1px solid lightgray;
+}

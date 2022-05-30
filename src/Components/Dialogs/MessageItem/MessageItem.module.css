@@ -1,0 +1,44 @@
+.message_item{
+    margin: 20px 40px 20px 40px;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+            "img name time"
+            "img message message";
+
+}
+
+.message_item img{
+    align-self: start;
+    grid-area: img;
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    object-position: 0 0;
+    border-radius: 50px;
+    margin: 5px;
+}
+
+
+.name{
+    font-weight: bold;
+    height: 20px;
+    align-self: center;
+    margin: 5px 0 5px 10px;
+    grid-area: name;
+}
+
+.message{
+    margin: 0 0 0 10px;
+    grid-area: message;
+}
+
+.time{
+    align-self: center;
+    font-size: 12px;
+    color: #a9a9a9;
+    grid-area: time;
+    margin: 0 0 0 10px;
+}
+
