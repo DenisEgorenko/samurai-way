@@ -1,8 +1,44 @@
 .dialogs{
+    height: calc(100vh - 79px);
     display: grid;
     grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+            "dialogs messages"
+            "dialogs input";
 }
 
 .dialog_items{
+    grid-area: dialogs;
     border-right: 1px solid lightgray;
+    overflow-y: scroll;
+}
+
+
+.messages{
+    grid-area: messages;
+    overflow-y: scroll;
+}
+
+
+.input_area{
+    align-self: end;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    height: 50px;
+    border-top: 1px solid lightgray;
+    background-color: #fafbfc;
+    grid-area: input;
+    align-items: center;
+
+}
+
+.input{
+    height: 20px;
+    margin: 0 0 0 10px;
+    resize: none;
+}
+
+.button{
+    height: 25px;
+    margin: 0 10px 0 10px;
 }
