@@ -3,6 +3,7 @@ import React from 'react';
 
 
 type messageType = {
+    id: number
     name: string,
     message: string,
     time: string

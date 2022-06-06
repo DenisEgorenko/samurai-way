@@ -3,15 +3,18 @@ import styles from "./Post.module.css"
 
 
 type PostProps = {
-    message: string
+    id: number,
+    date: string,
+    text: string,
+    likeCount:number
 }
 
 function Post(props: PostProps) {
     return (
         <div className={styles.post}>
             <img className={styles.image} src='/avatar.jpg'/>
-            {props.message}
-            <div>Like</div>
+            {props.text}
+            <div>Likes: {props.likeCount}</div>
         </div>
     )
 }

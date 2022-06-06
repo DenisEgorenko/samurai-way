@@ -1,8 +1,17 @@
 import React from "react";
 import Post from "./Post";
 import styles from "./MyPosts.module.css"
+import {postType} from '../../../redux/state';
 
-function MyPosts() {
+
+type myPostsProps = {
+    postsData: Array<postType>
+}
+
+function MyPosts(props: myPostsProps) {
+
+    let postElements = props.postsData.map(post=><Post id={post.id} date={post.date} text={post.text} likeCount={post.likeCount}/>)
+
     return (
         <div>
             My posts
@@ -10,11 +19,9 @@ function MyPosts() {
                 <textarea></textarea>
                 <button>Add post</button>
             </div>
-            <Post message="Hi"/>
-            <Post message="My name is"/>
-            <Post message="I'm learning React"/>
-            <Post message="Hi"/>
-            <Post message="Hi"/>
+
+            {postElements}
+
 
         </div>
     )
