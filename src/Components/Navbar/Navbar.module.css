@@ -45,3 +45,7 @@
     flex-direction: column;
     align-items: center;
 }
+
+.friend div{
+    font-size: 14px;
+}
