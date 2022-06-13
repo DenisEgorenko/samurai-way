@@ -1,5 +1,4 @@
-
-
+import {rerenderEntireTree} from '../render';
 
 export type postType = {
     id: number,
@@ -39,11 +38,11 @@ export type stateType = {
 let state: stateType = {
     profilePage: {
         postsData: [
-            {id: 1, date: "20:40", text: "Hi", likeCount: 12},
-            {id: 2, date: "20:40", text: "My name is", likeCount: 344},
-            {id: 3, date: "20:40", text: "I'm learning React", likeCount: 22},
-            {id: 4, date: "20:40", text: "Hi", likeCount: 55},
-            {id: 5, date: "20:40", text: "Hi", likeCount: 23},
+            {id: 1, date: '20:40', text: 'Hi', likeCount: 12},
+            {id: 2, date: '20:40', text: 'My name is', likeCount: 344},
+            {id: 3, date: '20:40', text: 'I\'m learning React', likeCount: 22},
+            {id: 4, date: '20:40', text: 'Hi', likeCount: 55},
+            {id: 5, date: '20:40', text: 'Hi', likeCount: 23},
         ],
     },
     messagePage: {
@@ -82,4 +81,13 @@ let state: stateType = {
     sideBar: []
 }
 
-export  default state
+export let addPost = (postMessage: string) => {
+
+    let newPost: postType = {id: 6, date: '20:50', text: postMessage, likeCount: 32}
+
+    state.profilePage.postsData.push(newPost)
+
+    rerenderEntireTree(state)
+}
+
+export default state

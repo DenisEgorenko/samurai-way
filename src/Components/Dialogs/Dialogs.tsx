@@ -18,6 +18,12 @@ function Dialogs(props: dialogsPropsType) {
     let messageElements = props.messageData.map(message => <MessageItem id={message.id} name={message.name}
                                                                   message={message.message} time={message.time}/>)
 
+    let newMessageElement = React.createRef<HTMLTextAreaElement>()
+
+    const addMessage = () => {
+        alert(newMessageElement.current?.value)
+    }
+
     return (
         <div className={styles.dialogs}>
 
@@ -33,8 +39,8 @@ function Dialogs(props: dialogsPropsType) {
             </div>
 
             <div className={styles.input_area}>
-                <textarea className={styles.input} wrap="hard" placeholder={'Введите сообщение'}/>
-                <button className={styles.button}>Отправить</button>
+                <textarea ref={newMessageElement} className={styles.input} wrap="hard" placeholder={'Введите сообщение'}/>
+                <button onClick={addMessage} className={styles.button}>Отправить</button>
             </div>
         </div>
     )
