@@ -1,10 +1,17 @@
 .header img{
-    height: 40px;
-    margin: 4px 0px 0px 460px;
+    width: 200px;
+    margin: 0 23px 0px 17px;
+}
+
+.header a{
+    height: 23px;
 }
 
 .header{
-    height: 48px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    height: 60px;
     border-bottom: 1px solid lightgray;
     position: fixed;
     top: 0;

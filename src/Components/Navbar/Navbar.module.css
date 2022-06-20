@@ -1,18 +1,33 @@
-.nav {
-    grid-area: nav;
+.navbar{
+    justify-content: center;
+    display: flex;
+    width: 240px;
+    flex-direction: column;
+    margin-top: 20px;
 }
 
 .item{
-    margin: 10px;
-}
-
-.item a{
+    padding: 15px 15px 15px 20px;
+    display: block;
     color: black;
     text-decoration: none;
 }
 
 .active_item{
     font-weight: bold;
+    border-right: 2px solid #5A4AE3;
+
+}
+
+.sideBar{
+    margin-top: 100px;
+    margin-left: 20px;
+}
+
+.friendsBlock{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
 }
 
 .image{
@@ -23,21 +38,8 @@
     border-radius: 50px;
 }
 
-.sideBar{
-    margin-top: 30px;
-    margin-left: 10px;
-
-}
-
-.friendsBlock{
-    margin-top: 15px;
-    display: flex;
-    flex-direction: row;
-}
-
-
 .friendsBlock > a:nth-child(n+2){
-    margin-left: 5px;
+    margin-left: 13px;
 }
 
 .friend{

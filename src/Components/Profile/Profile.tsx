@@ -1,12 +1,13 @@
 import styles from "./Profile.module.css";
 import React from "react";
 import MyPosts from "./MyPosts/MyPosts";
-import {postType} from '../../redux/state';
+import {postType, profilePageType} from '../../redux/state';
 
 
 type profileProps = {
     addPost: (postMessage: string)=>void
-    postsData: Array<postType>
+    profilePage: profilePageType
+    changeNewPostText: (newPostMessage: string) => void
 }
 
 function Profile(props: profileProps) {
@@ -15,7 +16,9 @@ function Profile(props: profileProps) {
             <div>
                 Ava + discr
             </div>
-            <MyPosts addPost={props.addPost} postsData={props.postsData}/>
+            <MyPosts addPost={props.addPost}
+                     profilePage={props.profilePage}
+                     changeNewPostText={props.changeNewPostText}/>
         </div>
     )
 }
