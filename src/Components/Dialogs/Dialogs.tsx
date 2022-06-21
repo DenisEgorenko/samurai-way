@@ -3,7 +3,7 @@ import styles from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import MessageItem from './MessageItem/MessageItem';
 import {message} from 'antd';
-import {dialogType, messageType} from '../../redux/state';
+import {dialogType, messageType} from '../../redux/store';
 
 
 type dialogsPropsType = {

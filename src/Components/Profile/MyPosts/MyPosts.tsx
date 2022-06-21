@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {ChangeEvent, MouseEvent} from 'react';
 import Post from './Post';
 import styles from './MyPosts.module.css'
-import {postType, profilePageType} from '../../../redux/state';
+import {profilePageType} from '../../../redux/store';
 
 
 type myPostsProps = {
@@ -12,17 +12,19 @@ type myPostsProps = {
 
 function MyPosts(props: myPostsProps) {
 
-    let postElements = props.profilePage.postsData.map(post => <Post id={post.id} date={post.date} text={post.text}
-                                                         likeCount={post.likeCount}/>)
-
-    let newPostElement = React.createRef<HTMLTextAreaElement>()
+    let postElements = props.profilePage.postsData.map(post =>
+        <Post id={post.id}
+              date={post.date}
+              text={post.text}
+              likeCount={post.likeCount}
+        />)
 
     const addPost = () => {
-        props.addPost(newPostElement.current ? newPostElement.current.value : '')
+        props.addPost(props.profilePage.newPostText)
     }
 
-    const onPostChange = () => {
-        props.changeNewPostText(newPostElement.current ? newPostElement.current.value: '')
+    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.changeNewPostText(e.currentTarget.value)
     }
 
 
@@ -30,12 +32,11 @@ function MyPosts(props: myPostsProps) {
         <div>
             My posts
             <div className={styles.newPost}>
-                <textarea onChange={onPostChange} value={props.profilePage.newPostText} ref={newPostElement}/>
+                <textarea onChange={onPostChange} value={props.profilePage.newPostText}/>
                 <button onClick={addPost}>Add post</button>
             </div>
 
             {postElements}
-
 
         </div>
     )
