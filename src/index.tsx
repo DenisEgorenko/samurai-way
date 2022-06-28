@@ -10,8 +10,7 @@ let rerenderEntireTree = (state: stateType) => {
 
     ReactDOM.render(
         <App
-            addPost={store.addPost.bind(store)}
-            changeNewPostText={store.changeNewPostText.bind(store)}
+            dispatch={store.dispatch.bind(store)}
             state={state}/>,
         document.getElementById('root')
     );

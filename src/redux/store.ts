@@ -1,3 +1,11 @@
+import profilePageReducer from './profilePageReducer';
+import messagePageReducer from './messagePageReducer';
+
+
+
+
+
+
 export type postType = {
     id: number,
     date: string,
@@ -25,7 +33,8 @@ export type profilePageType = {
 
 export type messagePageType = {
     dialogsData: Array<dialogType>,
-    messageData: Array<messageType>
+    messageData: Array<messageType>,
+    newMessageText: string
 }
 
 export type stateType = {
@@ -39,9 +48,8 @@ export type storeType = {
     _subscriber: (state: stateType) => void;
     _state: stateType;
     subscribe: (observer: (state: stateType) => void) => void
-    getState: ()=>stateType;
-    addPost: (postMessage: string) => void;
-    changeNewPostText: (newPostMessage: string) => void;
+    getState: () => stateType;
+    dispatch: (action: { type: string, newPostText?: string, newMessageText?:string }) => void
 }
 
 
@@ -60,6 +68,7 @@ let store: storeType = {
             newPostText: ''
         },
         messagePage: {
+
             dialogsData: [
                 {id: 1, name: 'Denis', lastMessage: 'Last Message'},
                 {id: 2, name: 'Dima', lastMessage: 'Last Message'},
@@ -72,6 +81,7 @@ let store: storeType = {
                 {id: 9, name: 'Vanya', lastMessage: 'Last Message'},
                 {id: 10, name: 'Petya', lastMessage: 'Last Message'}
             ],
+            newMessageText: '',
             messageData: [
                 {id: 1, name: 'Denis', message: 'Hi', time: '20:40'},
                 {
@@ -96,33 +106,26 @@ let store: storeType = {
     },
 
 
-    _subscriber(){
+    _subscriber() {
 
     },
 
-    subscribe(observer: (state: stateType) => void){
+    subscribe(observer: (state: stateType) => void) {
         this._subscriber = observer
     },
 
-    getState(){
+    getState() {
         return this._state
     },
 
 
-    addPost(postMessage: string){
+    dispatch(action) {
 
-        let newPost: postType = {id: 6, date: '20:50', text: postMessage, likeCount: 32}
-        this._state.profilePage.postsData.push(newPost)
+        this._state.profilePage = profilePageReducer(this._state.profilePage, action);
+        this._state.messagePage = messagePageReducer(this._state.messagePage, action);
+
         this._subscriber(this._state)
-        this._state.profilePage.newPostText = ''
     },
-
-
-    changeNewPostText(newPostMessage: string){
-        this._state.profilePage.newPostText = newPostMessage
-        this._subscriber(this._state)
-    }
 }
-
 
 export default store
