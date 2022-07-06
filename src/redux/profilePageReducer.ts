@@ -4,7 +4,20 @@ import {postType, profilePageType} from './store';
 const ADD_POST = 'ADD-POST';
 const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT';
 
-const profilePageReducer = (state: profilePageType, action: { type: string, newPostText?: string, newMessageText?:string }) => {
+
+let initialState = {
+    postsData: [
+        {id: 1, date: '20:40', text: 'Hi', likeCount: 12},
+        {id: 2, date: '20:40', text: 'My name is', likeCount: 344},
+        {id: 3, date: '20:40', text: 'I\'m learning React', likeCount: 22},
+        {id: 4, date: '20:40', text: 'Hi', likeCount: 55},
+        {id: 5, date: '20:40', text: 'Hi', likeCount: 23},
+        {id: 5, date: '20:40', text: 'Hi', likeCount: 23},
+    ],
+    newPostText: ''
+}
+
+const profilePageReducer = (state: profilePageType = initialState, action: { type: string, newPostText?: string, newMessageText?:string }) => {
 
 
     switch (action.type) {

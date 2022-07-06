@@ -13,23 +13,26 @@ import {addMessageActionCreator, changeNewMessageTextActionCreator} from '../../
 
 type dialogsPropsType = {
     messagePage: messagePageType,
-    dispatch: (action: { type: string, newMessageText?: string }) => void
+    addMessage: () => void,
+    onMessageChange: (text: string) => void
+
 }
 
 function Dialogs(props: dialogsPropsType) {
 
     let dialogsElements = props.messagePage.dialogsData.map(dialog => <DialogItem id={dialog.id} name={dialog.name}
-                                                                message={dialog.lastMessage}/>)
+                                                                                  message={dialog.lastMessage}/>)
     let messageElements = props.messagePage.messageData.map(message => <MessageItem id={message.id} name={message.name}
-                                                                  message={message.message} time={message.time}/>)
+                                                                                    message={message.message}
+                                                                                    time={message.time}/>)
 
 
     const addMessage = () => {
-        props.dispatch(addMessageActionCreator())
+        props.addMessage()
     }
 
     const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(changeNewMessageTextActionCreator(e.currentTarget.value))
+        props.onMessageChange(e.currentTarget.value)
     }
 
     return (

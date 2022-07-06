@@ -1,12 +1,13 @@
 import styles from "./Profile.module.css";
 import React from "react";
 import MyPosts from "./MyPosts/MyPosts";
-import {postType, profilePageType} from '../../redux/store';
+import {messagePageType, postType, profilePageType} from '../../redux/store';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
+import {EmptyObject, Store} from 'redux';
 
 
 type profileProps = {
-    profilePage: profilePageType
-    dispatch: (action: { type: string, newPostText?: string }) => void
+
 }
 
 function Profile(props: profileProps) {
@@ -15,9 +16,9 @@ function Profile(props: profileProps) {
             <div>
                 Ava + discr
             </div>
-            <MyPosts dispatch={props.dispatch}
-                     profilePage={props.profilePage}
-            />
+
+            <MyPostsContainer/>
+
         </div>
     )
 }

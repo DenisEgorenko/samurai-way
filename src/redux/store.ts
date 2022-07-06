@@ -3,9 +3,6 @@ import messagePageReducer from './messagePageReducer';
 
 
 
-
-
-
 export type postType = {
     id: number,
     date: string,
@@ -40,7 +37,7 @@ export type messagePageType = {
 export type stateType = {
     profilePage: profilePageType,
     messagePage: messagePageType
-    sideBar: any
+    // sideBar: any
 }
 
 
@@ -102,7 +99,7 @@ let store: storeType = {
                 }
             ]
         },
-        sideBar: []
+        // sideBar: []
     },
 
 
