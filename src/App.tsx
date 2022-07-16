@@ -7,16 +7,11 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import {messagePageType, profilePageType, stateType, storeType} from './redux/store'
-import {EmptyObject, Store} from 'redux';
 import DialogsContainer from './Components/Dialogs/DialogsContainer';
-
-type appPropsType = {
-
-}
+import UsersContainer from "./Components/Users/UsersContainer";
 
 
-function App(props: appPropsType) {
+function App() {
 
     return (
         <BrowserRouter>
@@ -39,10 +34,11 @@ function App(props: appPropsType) {
                         }/>
 
                         <Route path="/news" render={() => <News/>}/>
-                        <Route path="/dialogs"
-                               render={() => <DialogsContainer/>}/>
+                        <Route path="/users" render={() => <UsersContainer/>}/>
+                        <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                         <Route path="/music" render={() => <Music/>}/>
                         <Route path="/settings" render={() => <Settings/>}/>
+
                     </div>
 
                 </div>

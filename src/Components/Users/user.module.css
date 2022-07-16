@@ -1,0 +1,26 @@
+.user_avatar{
+    width: 100px;
+    height: 100px;
+}
+
+.user_wrapper{
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.left_side {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.right_side {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.button{
+    margin: 10px 0 10px 0;
+}

@@ -15,6 +15,9 @@ function Navbar() {
                 <NavLink className={`${styles.item} ${link.pathname === '/profile' && styles.active_item}`}
                          to="/profile">Профиль</NavLink>
 
+                <NavLink className={`${styles.item} ${link.pathname === '/users' && styles.active_item}`}
+                         to="/users">Пользователи</NavLink>
+
                 <NavLink className={`${styles.item} ${link.pathname === '/news' && styles.active_item}`}
                          to="/news">Новости</NavLink>
 

@@ -1,4 +1,22 @@
-import {messagePageType, messageType} from './store';
+export type dialogType = {
+    id: number,
+    name: string,
+    lastMessage: string
+}
+
+export type messageType = {
+    id: number,
+    name: string,
+    message: string,
+    time: string
+}
+
+export type messagePageType = {
+    dialogsData: Array<dialogType>,
+    messageData: Array<messageType>,
+    newMessageText: string
+}
+
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
 const CHANGE_NEW_MESSAGE_TEXT = 'CHANGE-NEW-MESSAGE-TEXT';
@@ -38,24 +56,22 @@ let initialState = {
     ]
 }
 
-const messagePageReducer = (state: messagePageType = initialState, action: { type: string, newPostText?: string, newMessageText?:string }) => {
+const messagePageReducer = (state: messagePageType = initialState, action: { type: string, newMessageText?: string }) => {
 
     switch (action.type) {
-        case 'ADD-MESSAGE':
+        case 'ADD-MESSAGE': {
             let newMessage: messageType = {
                 id: 1,
                 name: 'Denis',
                 message: state.newMessageText,
                 time: '20:40'
             }
-            state.messageData.push(newMessage)
-            state.newMessageText = ''
-            break;
+            return {...state, messageData: [...state.messageData, newMessage], newMessageText: ''}
+        }
         case 'CHANGE-NEW-MESSAGE-TEXT':
             if (action.newMessageText) {
-                state.newMessageText = action.newMessageText
+                return {...state, newMessageText: action.newMessageText}
             }
-            break;
     }
 
     return state

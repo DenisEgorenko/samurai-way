@@ -1,9 +1,17 @@
-import {postType, profilePageType} from './store';
+export type postType = {
+    id: number,
+    date: string,
+    text: string,
+    likeCount: number
+}
 
+export type profilePageType = {
+    postsData: Array<postType>,
+    newPostText: string
+}
 
 const ADD_POST = 'ADD-POST';
 const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT';
-
 
 let initialState = {
     postsData: [
@@ -17,25 +25,22 @@ let initialState = {
     newPostText: ''
 }
 
-const profilePageReducer = (state: profilePageType = initialState, action: { type: string, newPostText?: string, newMessageText?:string }) => {
+const profilePageReducer = (state: profilePageType = initialState, action: { type: string, newPostText?: string, newMessageText?: string }) => {
 
 
     switch (action.type) {
-        case 'ADD-POST':
+        case 'ADD-POST': {
             let newPost: postType = {id: 6, date: '20:50', text: state.newPostText, likeCount: 32}
-            state.postsData.push(newPost)
-            state.newPostText = ''
-            break;
+            return {...state, postsData: [newPost, ...state.postsData], newPostText: ''}
+        }
         case 'CHANGE-NEW-POST-TEXT':
             if (action.newPostText) {
-                state.newPostText = action.newPostText
+                return {...state, newPostText: action.newPostText}
             }
-            break;
     }
 
     return state
 }
-
 
 export const addPostActionCreator = () => (
     {type: ADD_POST}
