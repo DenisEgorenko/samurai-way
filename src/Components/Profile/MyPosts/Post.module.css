@@ -1,0 +1,12 @@
+.image{
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    object-position: 0 0;
+    border-radius: 50px;
+}
+
+
+.post{
+    margin: 10px;
+}
