@@ -1,17 +1,15 @@
 export type userType = {
-    id: string,
-    photoUrl: string,
-    fullName: string,
+    id: number,
+    photos: {small: string, large: string}
+    name: string,
     followed: boolean,
     status: string,
-    location: { city: string, country: string }
 }
+
 
 export type usersPageType = {
     users: Array<userType>
 }
-
-
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -21,7 +19,7 @@ let initialState: usersPageType = {
     users: []
 }
 
-const usersPageReducer = (state: usersPageType = initialState, action: { type: string, userID?: string, users: Array<userType> }): usersPageType => {
+const usersPageReducer = (state: usersPageType = initialState, action: { type: string, userID?: number, users: Array<userType> }): usersPageType => {
 
     switch (action.type) {
         case FOLLOW:
@@ -37,11 +35,11 @@ const usersPageReducer = (state: usersPageType = initialState, action: { type: s
     }
 }
 
-export const followAC = (userID: string) => (
+export const followAC = (userID: number) => (
     {type: FOLLOW, userID}
 )
 
-export const unfollowAC = (userID: string) => (
+export const unfollowAC = (userID: number) => (
     {type: UNFOLLOW, userID}
 )
 

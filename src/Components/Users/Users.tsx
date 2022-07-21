@@ -1,61 +1,42 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {userType} from "../../redux/usersPageReducer";
 import User from "./User";
+import axios from "axios";
 
 type usersPropsType = {
     users: Array<userType>,
-    follow: (userID: string) => void,
-    unfollow: (userID: string) => void,
+    follow: (userID: number) => void,
+    unfollow: (userID: number) => void,
     setUsers: (users: Array<userType>) => void
 }
 
-function Users(props: usersPropsType) {
+class Users extends React.Component <usersPropsType> {
 
-    if (props.users.length === 0) {
-        props.setUsers([
-            {
-                id: '1',
-                photoUrl: 'https://i0.wp.com/mustoi.ru/wp-content/uploads/2015/10/%D0%9F%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8C.png?fit=2252%2C2084&ssl=1',
-                fullName: 'Denis',
-                followed: true,
-                status: 'Last Message',
-                location: {city: 'Minsk', country: 'Belarus'}
-            },
-            {
-                id: '2',
-                photoUrl: 'https://i0.wp.com/mustoi.ru/wp-content/uploads/2015/10/%D0%9F%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8C.png?fit=2252%2C2084&ssl=1',
-                fullName: 'Sasha',
-                followed: false,
-                status: 'Last Message',
-                location: {city: 'Moscow', country: 'Russia'}
-            },
-            {
-                id: '3',
-                photoUrl: 'https://i0.wp.com/mustoi.ru/wp-content/uploads/2015/10/%D0%9F%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8C.png?fit=2252%2C2084&ssl=1',
-                fullName: 'Dima',
-                followed: false,
-                status: 'Last Message',
-                location: {city: 'Kiev', country: 'Russia'}
-            },
-        ])
+    // constructor(props: usersPropsType) {
+    //     super(props);
+    // }
+
+    componentDidMount() {
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(res => {
+            this.props.setUsers(res.data.items)
+        })
     }
 
-    return (
-        <div>
 
-            {props.users.map(u => <User follow={props.follow}
-                                        unfollow={props.unfollow}
-                                        id={u.id}
-                                        photoUrl={u.photoUrl}
-                                        fullName={u.fullName}
-                                        followed={u.followed}
-                                        status={u.status}
-                                        location={u.location}/>
-            )
-            }
+    render() {
+        return <div>
+
+            {this.props.users.map(u => <User follow={this.props.follow}
+                                             unfollow={this.props.unfollow}
+                                             id={u.id}
+                                             photos={u.photos}
+                                             name={u.name}
+                                             followed={u.followed}
+                                             status={u.status}/>
+            )}
 
         </div>
-    )
+    }
 }
 
 export default Users
