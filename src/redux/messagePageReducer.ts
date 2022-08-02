@@ -21,7 +21,7 @@ export type messagePageType = {
 const ADD_MESSAGE = 'ADD-MESSAGE';
 const CHANGE_NEW_MESSAGE_TEXT = 'CHANGE-NEW-MESSAGE-TEXT';
 
-let initialState = {
+export const messageInitialState: messagePageType = {
     dialogsData: [
         {id: 1, name: 'Denis', lastMessage: 'Last Message'},
         {id: 2, name: 'Dima', lastMessage: 'Last Message'},
@@ -56,7 +56,7 @@ let initialState = {
     ]
 }
 
-const messagePageReducer = (state: messagePageType = initialState, action: { type: string, newMessageText?: string }) => {
+const messagePageReducer = (state: messagePageType = messageInitialState, action: { type: string, newMessageText?: string }) => {
 
     switch (action.type) {
         case 'ADD-MESSAGE': {
@@ -73,15 +73,14 @@ const messagePageReducer = (state: messagePageType = initialState, action: { typ
                 return {...state, newMessageText: action.newMessageText}
             }
     }
-
     return state
 }
 
-export const addMessageActionCreator = () => (
+export const addMessageAC = () => (
     {type: ADD_MESSAGE}
 )
 
-export const changeNewMessageTextActionCreator = (newMessageText: string) => (
+export const changeNewMessageTextAC = (newMessageText: string) => (
     {type: CHANGE_NEW_MESSAGE_TEXT, newMessageText: newMessageText}
 )
 

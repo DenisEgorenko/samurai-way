@@ -1,4 +1,4 @@
-import {followActionType} from "./usersPageReducer";
+import {followActionType} from './usersPageReducer';
 
 export type postType = {
     id: number,
@@ -55,7 +55,7 @@ type actionType =
     | addProfileDataActionType
 
 
-let initialState: profilePageType = {
+export let profileInitialState: profilePageType = {
     profileData: {
         userId: 0,
         lookingForAJob: false,
@@ -88,7 +88,7 @@ let initialState: profilePageType = {
     newPostText: ''
 }
 
-const profilePageReducer = (state: profilePageType = initialState, action: actionType): profilePageType => {
+const profilePageReducer = (state: profilePageType = profileInitialState, action: actionType): profilePageType => {
     switch (action.type) {
 
         case 'ADD-POST': {
@@ -101,25 +101,27 @@ const profilePageReducer = (state: profilePageType = initialState, action: actio
             }
             break
         }
-        case "ADD-PROFILE-DATA": {
+        case 'ADD-PROFILE-DATA': {
             return {...state, profileData: action.profileData}
         }
     }
     return state
 }
 
-export const addProfileDataActionCreator = (profileData: profileDataType) => (
+
+
+export const addProfileDataActionCreator = (profileData: profileDataType): addProfileDataActionType => (
     {
         type: 'ADD-PROFILE-DATA',
         profileData: profileData
     }
 )
 
-export const addPostActionCreator = () => (
+export const addPostActionCreator = (): addPostActionType => (
     {type: 'ADD-POST'}
 )
 
-export const changeNewPostTextActionCreator = (newPostText: string) => (
+export const changeNewPostTextActionCreator = (newPostText: string): changeNewPostTextActionType => (
     {type: 'CHANGE-NEW-POST-TEXT', newPostText: newPostText}
 )
 

@@ -16,10 +16,12 @@ export const Profile = React.memo(function Profile() {
 
     const dispatch: AppDispatch = useDispatch()
     const profileData: profileDataType = useSelector((state: RootState) => state.profilePage.profileData)
+    const auth = useSelector((state: RootState) => state.auth)
+
 
     useEffect(() => {
         dispatch(setIsFetchingAC(true))
-        axios.get(`https://social-network.samuraijs.com/api/1.0//profile/${location.id ? location.id : 2}`).then(res => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0//profile/${location.id ? location.id : auth.authData.id}`).then(res => {
             dispatch(addProfileDataActionCreator(res.data))
             dispatch(setIsFetchingAC(false))
         })

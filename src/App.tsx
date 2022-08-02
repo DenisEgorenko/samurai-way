@@ -7,7 +7,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
-import DialogsContainer from './Components/Dialogs/DialogsContainer';
+import {DialogsContainer} from './Components/Dialogs/DialogsContainer';
 import {Users} from "./Components/Users/Users";
 
 
@@ -32,7 +32,7 @@ function App() {
                         <Route path="/profile/:id" render={
                             () => <Profile/>
                         }/>
-                        <Route path="/profile" render={
+                        <Route exact path="/profile" render={
                             () => <Profile/>
                         }/>
 

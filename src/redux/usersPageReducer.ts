@@ -12,7 +12,8 @@ export type usersPageType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
-    isFetching: boolean
+    isFetching: boolean,
+    followingInProgress: number[]
 }
 
 export type followActionType = {
@@ -44,6 +45,15 @@ export type setIsFetchingActionType = {
     isFetching: boolean
 }
 
+export type addFollowingUserActionType = {
+    type: 'ADD_FOLLOWING_USER',
+    userID: number
+}
+
+export type removeFollowedUserActionType = {
+    type: 'REMOVE_FOLLOWED_USER',
+    userID: number
+}
 
 type actionType =
     followActionType
@@ -52,15 +62,18 @@ type actionType =
     | setCurrenPageActionType
     | setTotalUsersCountActionType
     | setIsFetchingActionType
+    | addFollowingUserActionType
+    | removeFollowedUserActionType
+
 
 let initialState: usersPageType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 20,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: []
 }
-
 
 const usersPageReducer = (state: usersPageType = initialState, action: actionType): usersPageType => {
 
@@ -77,39 +90,53 @@ const usersPageReducer = (state: usersPageType = initialState, action: actionTyp
         case 'SET_CURRENT_PAGE':
             return {...state, currentPage: action.pageNumber}
 
-        case "SET_TOTAL_USERS_COUNT":
+        case 'SET_TOTAL_USERS_COUNT':
             return {...state, totalUsersCount: action.totalUsersCount}
 
-        case "SET_IS_FETCHING":
+        case 'SET_IS_FETCHING':
             return {...state, isFetching: action.isFetching}
+
+        case 'ADD_FOLLOWING_USER':
+            return {...state, followingInProgress: [...state.followingInProgress, action.userID]}
+
+        case 'REMOVE_FOLLOWED_USER':
+            return {...state, followingInProgress: state.followingInProgress.filter(u => u !== action.userID)}
 
         default:
             return state
     }
 }
 
-export const followAC = (userID: number) => (
+export const followAC = (userID: number): followActionType => (
     {type: 'FOLLOW', userID}
 )
 
-export const unfollowAC = (userID: number) => (
+export const unfollowAC = (userID: number): unFollowActionType => (
     {type: 'UNFOLLOW', userID}
 )
 
-export const setUsersAC = (users: Array<userType>) => (
+export const setUsersAC = (users: Array<userType>): setUsersActionType => (
     {type: 'SET_USERS', users}
 )
 
-export const setCurrentPageAC = (pageNumber: number) => (
+export const setCurrentPageAC = (pageNumber: number): setCurrenPageActionType => (
     {type: 'SET_CURRENT_PAGE', pageNumber}
 )
 
-export const setTotalUsersCountAC = (totalUsersCount: number) => (
+export const setTotalUsersCountAC = (totalUsersCount: number): setTotalUsersCountActionType => (
     {type: 'SET_TOTAL_USERS_COUNT', totalUsersCount}
 )
 
-export const setIsFetchingAC = (isFetching: boolean) => (
+export const setIsFetchingAC = (isFetching: boolean): setIsFetchingActionType => (
     {type: 'SET_IS_FETCHING', isFetching}
+)
+
+export const addFollowingUserAC = (userID: number): addFollowingUserActionType => (
+    {type: 'ADD_FOLLOWING_USER', userID}
+)
+
+export const removeFollowedUserAC = (userID: number): removeFollowedUserActionType => (
+    {type: 'REMOVE_FOLLOWED_USER', userID}
 )
 
 export default usersPageReducer

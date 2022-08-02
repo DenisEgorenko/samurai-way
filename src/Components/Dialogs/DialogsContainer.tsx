@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-    addMessageActionCreator,
-    changeNewMessageTextActionCreator,
+    addMessageAC,
+    changeNewMessageTextAC,
     messagePageType
 } from '../../redux/messagePageReducer';
 import Dialogs from './Dialogs';
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
+import {Dispatch} from 'redux';
 
 type mapStateToPropsType = {
     messagePage: messagePageType
@@ -25,11 +25,10 @@ const mapStateToProps = (state: mapStateToPropsType): mapStateToPropsType => {
 
 const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
     return {
-        addMessage: () => dispatch(addMessageActionCreator()),
-        onMessageChange: (text: string) => dispatch(changeNewMessageTextActionCreator(text))
+        addMessage: () => dispatch(addMessageAC()),
+        onMessageChange: (text: string) => dispatch(changeNewMessageTextAC(text))
     }
 }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 
-export default DialogsContainer
