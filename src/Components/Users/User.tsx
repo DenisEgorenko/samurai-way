@@ -1,18 +1,11 @@
 import React from 'react'
-import {
-    addFollowingUserAC,
-    followAC, removeFollowedUserAC,
-    unfollowAC,
-    userType
-} from '../../redux/usersPageReducer';
+import {followThunk, unFollowThunk, userType} from '../../redux/usersPageReducer';
 import styles from './user.module.css'
 import avatar from '../../assets/images/Профиль.webp'
-import {useDispatch, useSelector} from 'react-redux';
-import {AppDispatch, RootState} from '../../redux/redux-store';
+import {useDispatch} from 'react-redux';
+import {RootState} from '../../redux/redux-store';
 import {NavLink} from 'react-router-dom';
-import axios from 'axios';
-import {fork} from 'child_process';
-import {followAPI} from '../../api/api';
+import {ThunkDispatch} from 'redux-thunk';
 
 type userPropsType = {
     followingInProgress: number[]
@@ -20,26 +13,15 @@ type userPropsType = {
 
 function User(props: userPropsType & userType) {
 
-    const dispatch: AppDispatch = useDispatch()
+    const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch()
 
     const unFollowClickHandler = () => {
-        dispatch(addFollowingUserAC(props.id))
-        followAPI.unFollow(props.id).then(res => {
-            if (res.resultCode === 0) {
-                dispatch(unfollowAC(props.id))
-            }
-            dispatch(removeFollowedUserAC(props.id))
-        })
+        dispatch(unFollowThunk(props.id))
+
     }
 
     const followClickHandler = () => {
-        dispatch(addFollowingUserAC(props.id))
-        followAPI.follow(props.id).then(res => {
-            if (res.resultCode === 0) {
-                dispatch(followAC(props.id))
-            }
-            dispatch(removeFollowedUserAC(props.id))
-        })
+        dispatch(followThunk(props.id))
     }
 
     return (

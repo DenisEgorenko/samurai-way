@@ -1,24 +1,20 @@
 import React, {useEffect} from 'react';
 import styles from './Header.module.css';
 import {NavLink} from 'react-router-dom';
-import axios from 'axios';
-import {AppDispatch, RootState} from '../../redux/redux-store';
+import {RootState} from '../../redux/redux-store';
 import {useDispatch, useSelector} from 'react-redux';
-import {setAuthDataAC} from '../../redux/authReducer';
-import {authAPI} from '../../api/api';
+import {authThunk} from '../../redux/authReducer';
+import {ThunkDispatch} from 'redux-thunk';
 
 
 function Header() {
 
-    const dispatch: AppDispatch = useDispatch()
+    const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch()
     const auth = useSelector((state: RootState) => state.auth)
 
+
     useEffect(() => {
-        authAPI.getAuth().then(res => {
-            if (res.resultCode === 0) {
-                dispatch(setAuthDataAC(res.data))
-            }
-        })
+        dispatch(authThunk())
     }, [])
 
     return (

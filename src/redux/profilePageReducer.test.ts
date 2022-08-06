@@ -1,5 +1,5 @@
-import profilePageReducer, {
-    addPostActionCreator,
+import {
+    addPostActionCreator, profilePageReducer,
     addProfileDataActionCreator,
     changeNewPostTextActionCreator, profileInitialState
 } from './profilePageReducer';

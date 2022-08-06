@@ -1,3 +1,6 @@
+import {followAPI, usersAPI} from '../api/api';
+import {AppDispatch} from './redux-store';
+
 export type userType = {
     id: number,
     photos: { small: string, large: string }
@@ -75,7 +78,7 @@ let initialState: usersPageType = {
     followingInProgress: []
 }
 
-const usersPageReducer = (state: usersPageType = initialState, action: actionType): usersPageType => {
+export const usersPageReducer = (state: usersPageType = initialState, action: actionType): usersPageType => {
 
     switch (action.type) {
         case 'FOLLOW':
@@ -139,4 +142,43 @@ export const removeFollowedUserAC = (userID: number): removeFollowedUserActionTy
     {type: 'REMOVE_FOLLOWED_USER', userID}
 )
 
-export default usersPageReducer
+
+export const getUsersThunk = (pageSize: number, currentPage: number) => (dispatch: AppDispatch) => {
+    dispatch(setIsFetchingAC(true))
+    dispatch(setCurrentPageAC(currentPage))
+    usersAPI.getUsers(pageSize, currentPage).then(res => {
+        dispatch(setUsersAC(res.items))
+        dispatch(setTotalUsersCountAC(res.totalCount))
+        dispatch(setIsFetchingAC(false))
+    })
+}
+
+
+export const followThunk = (id: number) => (dispatch: AppDispatch) => {
+    dispatch(addFollowingUserAC(id))
+    followAPI.follow(id).then(res => {
+        if (res.resultCode === 0) {
+            dispatch(followAC(id))
+        }
+        dispatch(removeFollowedUserAC(id))
+    })
+}
+
+export const unFollowThunk = (id: number) => (dispatch: AppDispatch) => {
+    dispatch(addFollowingUserAC(id))
+    followAPI.unFollow(id).then(res => {
+        if (res.resultCode === 0) {
+            dispatch(unfollowAC(id))
+        }
+        dispatch(removeFollowedUserAC(id))
+    })
+}
+
+
+
+
+
+
+
+
+

@@ -56,7 +56,7 @@ export const messageInitialState: messagePageType = {
     ]
 }
 
-const messagePageReducer = (state: messagePageType = messageInitialState, action: { type: string, newMessageText?: string }) => {
+export const messagePageReducer = (state: messagePageType = messageInitialState, action: { type: string, newMessageText?: string }) => {
 
     switch (action.type) {
         case 'ADD-MESSAGE': {
@@ -84,4 +84,3 @@ export const changeNewMessageTextAC = (newMessageText: string) => (
     {type: CHANGE_NEW_MESSAGE_TEXT, newMessageText: newMessageText}
 )
 
-export default messagePageReducer

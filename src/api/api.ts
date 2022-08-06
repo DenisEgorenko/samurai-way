@@ -1,5 +1,4 @@
 import axios from 'axios';
-import exp from 'constants';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -27,4 +26,10 @@ export const followAPI = {
     unFollow(userID: number) {
         return instance.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userID}`).then(res => res.data)
     }
-} 
+}
+
+export const profileAPI = {
+    getProfileData(id: number) {
+        return instance.get(`profile/${id}`)
+    }
+}

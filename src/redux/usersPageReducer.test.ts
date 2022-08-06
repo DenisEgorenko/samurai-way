@@ -1,5 +1,6 @@
-import usersPageReducer, {
+import {
     addFollowingUserAC,
+    usersPageReducer,
     followAC,
     removeFollowedUserAC, setCurrentPageAC, setIsFetchingAC, setTotalUsersCountAC, setUsersAC,
     unfollowAC,

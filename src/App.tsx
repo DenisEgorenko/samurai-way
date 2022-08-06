@@ -9,6 +9,7 @@ import Music from './Components/Music/Music';
 import Settings from './Components/Settings/Settings';
 import {DialogsContainer} from './Components/Dialogs/DialogsContainer';
 import {Users} from "./Components/Users/Users";
+import {Login} from './Components/Login/Login';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
                         <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                         <Route path="/music" render={() => <Music/>}/>
                         <Route path="/settings" render={() => <Settings/>}/>
+                        <Route path="/login" render={() => <Login/>}/>
 
                     </div>
 

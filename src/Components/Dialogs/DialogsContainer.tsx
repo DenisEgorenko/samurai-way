@@ -7,9 +7,12 @@ import {
 import Dialogs from './Dialogs';
 import {connect} from "react-redux";
 import {Dispatch} from 'redux';
+import {authType} from '../../redux/authReducer';
+import {RootState} from '../../redux/redux-store';
 
 type mapStateToPropsType = {
-    messagePage: messagePageType
+    messagePage: messagePageType,
+    isAuth: boolean
 }
 
 type mapDispatchToPropsType = {
@@ -17,9 +20,10 @@ type mapDispatchToPropsType = {
     onMessageChange: (text: string) => void
 }
 
-const mapStateToProps = (state: mapStateToPropsType): mapStateToPropsType => {
+const mapStateToProps = (state: RootState): mapStateToPropsType => {
     return {
-        messagePage: state.messagePage
+        messagePage: state.messagePage,
+        isAuth: state.auth.isAuth
     }
 }
 

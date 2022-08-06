@@ -1,5 +1,6 @@
-import messagePageReducer, {
+import {
     addMessageAC,
+    messagePageReducer,
     changeNewMessageTextAC,
     messageInitialState,
     messagePageType

@@ -1,4 +1,6 @@
-import {followActionType} from './usersPageReducer';
+import {setIsFetchingAC} from './usersPageReducer';
+import {AppDispatch} from './redux-store';
+import {profileAPI} from '../api/api';
 
 export type postType = {
     id: number,
@@ -88,7 +90,7 @@ export let profileInitialState: profilePageType = {
     newPostText: ''
 }
 
-const profilePageReducer = (state: profilePageType = profileInitialState, action: actionType): profilePageType => {
+export const profilePageReducer = (state: profilePageType = profileInitialState, action: actionType): profilePageType => {
     switch (action.type) {
 
         case 'ADD-POST': {
@@ -125,4 +127,12 @@ export const changeNewPostTextActionCreator = (newPostText: string): changeNewPo
     {type: 'CHANGE-NEW-POST-TEXT', newPostText: newPostText}
 )
 
-export default profilePageReducer
+
+
+export const profileThunk = (id: number) => (dispatch: AppDispatch) => {
+    dispatch(setIsFetchingAC(true))
+    profileAPI.getProfileData(id).then(res => {
+        dispatch(addProfileDataActionCreator(res.data))
+        dispatch(setIsFetchingAC(false))
+    })
+}

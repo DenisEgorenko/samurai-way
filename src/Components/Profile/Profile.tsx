@@ -1,31 +1,32 @@
-import styles from "./Profile.module.css";
-import React, {useEffect} from "react";
+import styles from './Profile.module.css';
+import React, {useEffect} from 'react';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../redux/redux-store";
-import {setIsFetchingAC, setTotalUsersCountAC, setUsersAC} from "../../redux/usersPageReducer";
-import axios from "axios";
-import {addProfileDataActionCreator, profileDataType} from "../../redux/profilePageReducer";
-import avatar from "../../assets/images/Профиль.webp";
-import {useLocation, useParams, withRouter} from "react-router-dom";
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../redux/redux-store';
+import {profileDataType, profileThunk} from '../../redux/profilePageReducer';
+import avatar from '../../assets/images/Профиль.webp';
+import {Redirect, useParams} from 'react-router-dom';
+import {ThunkDispatch} from 'redux-thunk';
 
 
 export const Profile = React.memo(function Profile() {
 
     let location: { id?: string } = useParams()
 
-    const dispatch: AppDispatch = useDispatch()
+    const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch()
     const profileData: profileDataType = useSelector((state: RootState) => state.profilePage.profileData)
     const auth = useSelector((state: RootState) => state.auth)
 
+    const id = location.id ? Number(location.id) : Number(auth.authData.id)
+
 
     useEffect(() => {
-        dispatch(setIsFetchingAC(true))
-        axios.get(`https://social-network.samuraijs.com/api/1.0//profile/${location.id ? location.id : auth.authData.id}`).then(res => {
-            dispatch(addProfileDataActionCreator(res.data))
-            dispatch(setIsFetchingAC(false))
-        })
+        dispatch(profileThunk(id))
     }, [])
+
+
+    if (auth.isAuth === false) return <Redirect to={'/login'}/>
+
 
     return (
         <div className={styles.profile}>
