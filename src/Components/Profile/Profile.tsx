@@ -3,10 +3,11 @@ import React, {useEffect} from 'react';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/redux-store';
-import {profileDataType, profileThunk} from '../../redux/profilePageReducer';
+import {profilePageType, profileThunk} from '../../redux/profilePageReducer';
 import avatar from '../../assets/images/Профиль.webp';
-import {Redirect, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {ThunkDispatch} from 'redux-thunk';
+import {ProfileStatus} from './ProfileStatus';
 
 
 export const Profile = React.memo(function Profile() {
@@ -14,7 +15,7 @@ export const Profile = React.memo(function Profile() {
     let location: { id?: string } = useParams()
 
     const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch()
-    const profileData: profileDataType = useSelector((state: RootState) => state.profilePage.profileData)
+    const profileData: profilePageType = useSelector<RootState, profilePageType>((state) => state.profilePage)
     const auth = useSelector((state: RootState) => state.auth)
 
     const id = location.id ? Number(location.id) : Number(auth.authData.id)
@@ -25,23 +26,19 @@ export const Profile = React.memo(function Profile() {
     }, [])
 
 
-    if (auth.isAuth === false) return <Redirect to={'/login'}/>
-
-
     return (
         <div className={styles.profile}>
             <div>
                 <img style={{width: '100px', height: '100px'}}
-                     src={profileData.photos.small ? profileData.photos.small : avatar}/>
+                     src={profileData.profileData.photos.small ? profileData.profileData.photos.small : avatar}/>
                 <div>
-                    {profileData.fullName}
+                    {profileData.profileData.fullName}
                 </div>
                 <div>
-                    {profileData.aboutMe}
+                    {profileData.profileData.lookingForAJobDescription}
                 </div>
-                <div>
-                    {profileData.lookingForAJobDescription}
-                </div>
+
+                <ProfileStatus status={profileData.profileStatus}/>
             </div>
 
             <MyPostsContainer/>
@@ -49,3 +46,4 @@ export const Profile = React.memo(function Profile() {
         </div>
     )
 })
+

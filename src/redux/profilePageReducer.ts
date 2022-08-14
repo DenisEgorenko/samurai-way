@@ -33,6 +33,7 @@ export type profileDataType = {
 
 export type profilePageType = {
     profileData: profileDataType,
+    profileStatus: string,
     postsData: Array<postType>,
     newPostText: string
 }
@@ -51,10 +52,22 @@ export type addProfileDataActionType = {
     profileData: profileDataType
 }
 
+export type addProfileStatusActionType = {
+    type: 'ADD-PROFILE-STATUS',
+    profileStatus: string
+}
+
+export type updateProfileStatusActionType = {
+    type: 'UPDATE-PROFILE-STATUS',
+    newProfileStatus: string
+}
+
 type actionType =
     addPostActionType
     | changeNewPostTextActionType
     | addProfileDataActionType
+    | addProfileStatusActionType
+    | updateProfileStatusActionType
 
 
 export let profileInitialState: profilePageType = {
@@ -79,6 +92,7 @@ export let profileInitialState: profilePageType = {
             large: '',
         }
     },
+    profileStatus: '',
     postsData: [
         {id: 1, date: '20:40', text: 'Hi', likeCount: 12},
         {id: 2, date: '20:40', text: 'My name is', likeCount: 344},
@@ -106,10 +120,17 @@ export const profilePageReducer = (state: profilePageType = profileInitialState,
         case 'ADD-PROFILE-DATA': {
             return {...state, profileData: action.profileData}
         }
+
+        case 'ADD-PROFILE-STATUS': {
+            return {...state, profileStatus: action.profileStatus}
+        }
+
+        case 'UPDATE-PROFILE-STATUS': {
+            return {...state, profileStatus: action.newProfileStatus}
+        }
     }
     return state
 }
-
 
 
 export const addProfileDataActionCreator = (profileData: profileDataType): addProfileDataActionType => (
@@ -127,12 +148,36 @@ export const changeNewPostTextActionCreator = (newPostText: string): changeNewPo
     {type: 'CHANGE-NEW-POST-TEXT', newPostText: newPostText}
 )
 
+export const addProfileStatusActionCreator = (status: string): addProfileStatusActionType => (
+    {type: 'ADD-PROFILE-STATUS', profileStatus: status}
+)
+
+export const updateProfileStatusActionCreator = (status: string): updateProfileStatusActionType => (
+    {type: 'UPDATE-PROFILE-STATUS', newProfileStatus: status}
+)
 
 
 export const profileThunk = (id: number) => (dispatch: AppDispatch) => {
     dispatch(setIsFetchingAC(true))
-    profileAPI.getProfileData(id).then(res => {
+
+    const prReq = profileAPI.getProfileData(id).then(res => {
         dispatch(addProfileDataActionCreator(res.data))
+    })
+    const prStReq = profileAPI.getStatus(id).then(res => {
+        dispatch(addProfileStatusActionCreator(res.data))
+    })
+
+    Promise.all([prReq, prStReq]).then(req => {
         dispatch(setIsFetchingAC(false))
     })
+}
+
+export const SetProfileStatusThunk = (status: string) => (dispatch: AppDispatch) => {
+
+    profileAPI.setStatus(status).then(res => {
+        if(res.data.resultCode === 0){
+            dispatch(addProfileStatusActionCreator(status))
+        }
+    })
+
 }

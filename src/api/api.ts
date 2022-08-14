@@ -31,5 +31,13 @@ export const followAPI = {
 export const profileAPI = {
     getProfileData(id: number) {
         return instance.get(`profile/${id}`)
+    },
+
+    setStatus(status: string) {
+        return instance.put('profile/status', {status: status})
+    },
+
+    getStatus(id: number){
+        return instance.get(`/profile/status/${id}`)
     }
 }
