@@ -1,7 +1,6 @@
 import {
     addPostActionCreator, profilePageReducer,
-    addProfileDataActionCreator,
-    changeNewPostTextActionCreator, profileInitialState
+    addProfileDataActionCreator, profileInitialState
 } from './profilePageReducer';
 
 test('Profile data should be added', () => {
@@ -36,16 +35,7 @@ test('Profile data should be added', () => {
 
 test('Post data should be added', () => {
 
-    const resultState = profilePageReducer(profileInitialState, addPostActionCreator())
+    const resultState = profilePageReducer(profileInitialState, addPostActionCreator("text"))
 
     expect(resultState.postsData.length).toBe(7)
-})
-
-test('New post text should be added', () => {
-
-    const newPostText = 'Text'
-
-    const resultState = profilePageReducer(profileInitialState, changeNewPostTextActionCreator(newPostText))
-
-    expect(resultState.newPostText).toBe('Text')
 })

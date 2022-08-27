@@ -1,15 +1,20 @@
-import React, {ChangeEvent} from 'react';
+import React, {PropsWithChildren} from 'react';
 import styles from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import MessageItem from './MessageItem/MessageItem';
 import {messagePageType} from '../../redux/messagePageReducer';
-import {Redirect} from 'react-router-dom';
+import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {Textarea} from '../../utills/FormsControls';
+import {required} from '../../utills/validators';
 
 
 type dialogsPropsType = {
     messagePage: messagePageType,
-    addMessage: () => void,
-    onMessageChange: (text: string) => void
+    addMessage: (newMessageText: string) => void,
+}
+
+type formData = {
+    newMessageText: string
 }
 
 function Dialogs(props: dialogsPropsType) {
@@ -21,13 +26,11 @@ function Dialogs(props: dialogsPropsType) {
                                                                                     time={message.time}/>)
 
 
-    const addMessage = () => {
-        props.addMessage()
+    const addMessage = (values: formData) => {
+        console.log(values)
+        props.addMessage(values.newMessageText)
     }
 
-    const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.onMessageChange(e.currentTarget.value)
-    }
 
     return (
         <div className={styles.dialogs}>
@@ -44,17 +47,22 @@ function Dialogs(props: dialogsPropsType) {
             </div>
 
             <div className={styles.input_area}>
-                <textarea value={props.messagePage.newMessageText}
-                          onChange={onMessageChange}
-                          className={styles.input}
-                          wrap="hard"
-                          placeholder={'Введите сообщение'}
-                />
-                <button onClick={addMessage} className={styles.button}>Отправить</button>
+                <AddNewMessageForm onSubmit={addMessage}/>
             </div>
         </div>
     )
 }
 
+const AddNewMessageForm = reduxForm<formData>({form: 'AddNewMessageForm'})(
+    (props: PropsWithChildren<InjectedFormProps<formData>>) => {
+        return <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field name={'newMessageText'} placeholder={'Введите текст сообщения'} component={Textarea} validate={[required]}/>
+            </div>
+            <div>
+                <button className={styles.button}>Отправить</button>
+            </div>
+        </form>;
+    })
 
 export default Dialogs

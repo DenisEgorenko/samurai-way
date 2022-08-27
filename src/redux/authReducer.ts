@@ -1,5 +1,9 @@
-import {AppDispatch} from './redux-store';
+import {AppDispatch, RootState} from './redux-store';
 import {authAPI} from '../api/api';
+import {Redirect} from 'react-router-dom';
+import React from 'react';
+import {ThunkDispatch} from 'redux-thunk';
+import {stopSubmit} from 'redux-form';
 
 export type authDataType = {
     id: number | null,
@@ -9,7 +13,8 @@ export type authDataType = {
 
 export type authType = {
     authData: authDataType,
-    isAuth: boolean
+    isAuth: boolean,
+    initialized: boolean
 }
 
 export type setAuthDataActionType = {
@@ -17,7 +22,11 @@ export type setAuthDataActionType = {
     authData: authDataType
 }
 
-type actionType = setAuthDataActionType
+export type setAuthFetchingActionType = {
+    type: 'SET-AUTH-FETCHING',
+}
+
+type actionType = setAuthDataActionType | setAuthFetchingActionType
 
 
 let initialState: authType = {
@@ -26,13 +35,18 @@ let initialState: authType = {
         login: '',
         email: '',
     },
-    isAuth: false
+    isAuth: false,
+    initialized: false
 }
 
 export const authReducer = (state: authType = initialState, action: actionType): authType => {
     switch (action.type) {
         case 'SET-AUTH-DATA': {
             return {...state, authData: action.authData, isAuth: true}
+        }
+
+        case 'SET-AUTH-FETCHING': {
+            return {...state, initialized: !state.initialized}
         }
     }
     return state
@@ -46,10 +60,36 @@ export const setAuthDataAC = (authData: authDataType): setAuthDataActionType => 
     }
 )
 
+export const setAuthFetchingAC = (): setAuthFetchingActionType => (
+    {
+        type: 'SET-AUTH-FETCHING',
+    }
+)
+
+
 export const authThunk = () => (dispatch: AppDispatch) => {
-    authAPI.getAuth().then(res => {
+    return authAPI.getAuth().then(res => {
         if (res.resultCode === 0) {
             dispatch(setAuthDataAC(res.data))
+            dispatch(setAuthFetchingAC())
+
+        } else {
+            dispatch(setAuthFetchingAC())
+        }
+    })
+}
+
+export const loginThunk = (email: string, password: string, rememberMe: boolean) => (dispatch: ThunkDispatch<RootState, undefined, any>) => {
+    authAPI.login(
+        email,
+        password,
+        rememberMe
+    ).then(res => {
+        dispatch(setAuthFetchingAC())
+        if (res.resultCode === 0) {
+            dispatch(authThunk())
+        } else {
+            dispatch(stopSubmit('LoginForm', {_error: 'Error'}))
         }
     })
 }

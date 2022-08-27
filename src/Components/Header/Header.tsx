@@ -5,6 +5,7 @@ import {RootState} from '../../redux/redux-store';
 import {useDispatch, useSelector} from 'react-redux';
 import {authThunk} from '../../redux/authReducer';
 import {ThunkDispatch} from 'redux-thunk';
+import {authAPI} from '../../api/api';
 
 
 function Header() {
@@ -12,10 +13,9 @@ function Header() {
     const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch()
     const auth = useSelector((state: RootState) => state.auth)
 
-
-    useEffect(() => {
-        dispatch(authThunk())
-    }, [])
+    const logOut = () => {
+        dispatch(authAPI.logOut).then()
+    }
 
     return (
         <header className={styles.header}>
@@ -24,7 +24,7 @@ function Header() {
             </a>
 
             <div className={styles.loginBlock}>
-                {auth.isAuth ? auth.authData.login :
+                {auth.isAuth ? <div onClick={logOut}>{auth.authData.login}</div> :
                     <NavLink to={'/login'}>Login</NavLink>}
             </div>
         </header>

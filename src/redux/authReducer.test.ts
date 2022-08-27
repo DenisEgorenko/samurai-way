@@ -8,7 +8,8 @@ test('Right Auth Data Should Be Added', () => {
             login: '',
             email: ''
         },
-        isAuth: false
+        isAuth: false,
+        initialized: false
     }
 
     const authData: authDataType = {id: 18145, login: 'den9182', email: 'den9182@gmail.com'}

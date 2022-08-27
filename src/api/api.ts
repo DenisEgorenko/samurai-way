@@ -14,17 +14,29 @@ export const usersAPI = {
 
 export const authAPI = {
     getAuth() {
-        return instance.get('https://social-network.samuraijs.com/api/1.0/auth/me').then(res => res.data)
+        return instance.get('auth/me').then(res => res.data)
+    },
+
+    login(email: string, password: string, rememberMe: boolean) {
+        return instance.post('auth/login', {
+            email: email,
+            password: password,
+            rememberMe: rememberMe
+        }).then(res => res.data)
+    },
+
+    logOut() {
+        return instance.delete('auth/login').then(res => res.data)
     }
 }
 
 export const followAPI = {
     follow(userID: number) {
-        return instance.post(`https://social-network.samuraijs.com/api/1.0/follow/${userID}`).then(res => res.data)
+        return instance.post(`follow/${userID}`).then(res => res.data)
     },
 
     unFollow(userID: number) {
-        return instance.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userID}`).then(res => res.data)
+        return instance.delete(`follow/${userID}`).then(res => res.data)
     }
 }
 
@@ -37,7 +49,7 @@ export const profileAPI = {
         return instance.put('profile/status', {status: status})
     },
 
-    getStatus(id: number){
+    getStatus(id: number) {
         return instance.get(`/profile/status/${id}`)
     }
 }

@@ -35,15 +35,10 @@ export type profilePageType = {
     profileData: profileDataType,
     profileStatus: string,
     postsData: Array<postType>,
-    newPostText: string
 }
 
 export type addPostActionType = {
     type: 'ADD-POST',
-}
-
-export type changeNewPostTextActionType = {
-    type: 'CHANGE-NEW-POST-TEXT',
     newPostText: string
 }
 
@@ -64,7 +59,6 @@ export type updateProfileStatusActionType = {
 
 type actionType =
     addPostActionType
-    | changeNewPostTextActionType
     | addProfileDataActionType
     | addProfileStatusActionType
     | updateProfileStatusActionType
@@ -101,21 +95,14 @@ export let profileInitialState: profilePageType = {
         {id: 5, date: '20:40', text: 'Hi', likeCount: 23},
         {id: 5, date: '20:40', text: 'Hi', likeCount: 23},
     ],
-    newPostText: ''
 }
 
 export const profilePageReducer = (state: profilePageType = profileInitialState, action: actionType): profilePageType => {
     switch (action.type) {
 
         case 'ADD-POST': {
-            let newPost: postType = {id: 6, date: '20:50', text: state.newPostText, likeCount: 32}
-            return {...state, postsData: [newPost, ...state.postsData], newPostText: ''}
-        }
-        case 'CHANGE-NEW-POST-TEXT': {
-            if (action.newPostText) {
-                return {...state, newPostText: action.newPostText}
-            }
-            break
+            let newPost: postType = {id: 6, date: '20:50', text: action.newPostText, likeCount: 32}
+            return {...state, postsData: [newPost, ...state.postsData]}
         }
         case 'ADD-PROFILE-DATA': {
             return {...state, profileData: action.profileData}
@@ -140,13 +127,10 @@ export const addProfileDataActionCreator = (profileData: profileDataType): addPr
     }
 )
 
-export const addPostActionCreator = (): addPostActionType => (
-    {type: 'ADD-POST'}
+export const addPostActionCreator = (newPostText: string): addPostActionType => (
+    {type: 'ADD-POST', newPostText: newPostText}
 )
 
-export const changeNewPostTextActionCreator = (newPostText: string): changeNewPostTextActionType => (
-    {type: 'CHANGE-NEW-POST-TEXT', newPostText: newPostText}
-)
 
 export const addProfileStatusActionCreator = (status: string): addProfileStatusActionType => (
     {type: 'ADD-PROFILE-STATUS', profileStatus: status}

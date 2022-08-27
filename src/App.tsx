@@ -11,7 +11,7 @@ import {DialogsContainer} from './Components/Dialogs/DialogsContainer';
 import {Users} from './Components/Users/Users';
 import {Login} from './Components/Login/Login';
 import {CheckAuthHOC} from './hoc/CheckAuthHOC';
-import {authThunk, authType} from './redux/authReducer';
+import {authThunk, authType, setAuthFetchingAC} from './redux/authReducer';
 import {ThunkDispatch} from 'redux-thunk';
 import {RootState} from './redux/redux-store';
 import {useDispatch, useSelector} from 'react-redux';
@@ -21,7 +21,16 @@ import {profileThunk} from './redux/profilePageReducer';
 
 function App() {
 
+    const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch()
+    const auth = useSelector((state: RootState) => state.auth)
 
+
+    useEffect(() => {
+        dispatch(authThunk())
+    }, [])
+
+
+    if (!auth.initialized) return <Preloader/>
 
     return <BrowserRouter>
         <div className={styles.app_wrapper}>

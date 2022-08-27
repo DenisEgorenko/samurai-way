@@ -1,5 +1,11 @@
 import React, {PropsWithChildren, useEffect} from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {maxLength30, required} from '../../utills/validators';
+import {Redirect} from 'react-router-dom';
+import {ThunkDispatch} from 'redux-thunk';
+import {RootState} from '../../redux/redux-store';
+import {useDispatch, useSelector} from 'react-redux';
+import {loginThunk} from '../../redux/authReducer';
 
 
 type formData = {
@@ -11,26 +17,38 @@ type formData = {
 
 export function Login() {
 
-    const onSubmit = (formData: formData) => {
-        console.log(formData)
+    const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch()
+    const auth = useSelector((state: RootState) => state.auth)
+
+    const onSubmit = (values: formData) => {
+
+        console.log(values)
+        dispatch(loginThunk(values.login, values.password, values.rememberMe))
     }
 
     return (
         <div>
-            <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            {!auth.isAuth ?
+                <div>
+                    <h1>Login</h1>
+                    <LoginForm onSubmit={onSubmit}/>
+                </div> : <Redirect to={'profile'}/>
+            }
         </div>
     )
 }
 
-const LoginForm: React.FC<InjectedFormProps<formData>> = (props: PropsWithChildren<InjectedFormProps<formData>>) => {
+
+const LoginForm = reduxForm<formData>({
+    form: 'LoginForm'
+})((props: PropsWithChildren<InjectedFormProps<formData>>) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field name={'login'} placeholder={'Login'} component={'input'}/>
+                <Field validate={[required]} name={'login'} placeholder={'Login'} component={'input'}/>
             </div>
             <div>
-                <Field name={'password'} placeholder={'Password'} component={'input'}/>
+                <Field validate={[required]} name={'password'} placeholder={'Password'} component={'input'}/>
             </div>
             <div>
                 <Field name={'rememberMe'} component={'input'} type={'checkbox'}/>
@@ -38,13 +56,12 @@ const LoginForm: React.FC<InjectedFormProps<formData>> = (props: PropsWithChildr
             <div>
                 <button>Login</button>
             </div>
+            <div>
+                {props.error}
+            </div>
         </form>
     )
-}
-
-export const LoginReduxForm = reduxForm<formData>({
-    form: 'Login'
-})(LoginForm)
+})
 
 
 

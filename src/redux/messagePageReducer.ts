@@ -14,12 +14,10 @@ export type messageType = {
 export type messagePageType = {
     dialogsData: Array<dialogType>,
     messageData: Array<messageType>,
-    newMessageText: string
 }
 
 
 const ADD_MESSAGE = 'ADD-MESSAGE';
-const CHANGE_NEW_MESSAGE_TEXT = 'CHANGE-NEW-MESSAGE-TEXT';
 
 export const messageInitialState: messagePageType = {
     dialogsData: [
@@ -34,7 +32,6 @@ export const messageInitialState: messagePageType = {
         {id: 9, name: 'Vanya', lastMessage: 'Last Message'},
         {id: 10, name: 'Petya', lastMessage: 'Last Message'}
     ],
-    newMessageText: '',
     messageData: [
         {id: 1, name: 'Denis', message: 'Hi', time: '20:40'},
         {
@@ -56,31 +53,22 @@ export const messageInitialState: messagePageType = {
     ]
 }
 
-export const messagePageReducer = (state: messagePageType = messageInitialState, action: { type: string, newMessageText?: string }) => {
+export const messagePageReducer = (state: messagePageType = messageInitialState, action: { type: string, newMessageText: string }) => {
 
     switch (action.type) {
         case 'ADD-MESSAGE': {
             let newMessage: messageType = {
                 id: 1,
                 name: 'Denis',
-                message: state.newMessageText,
+                message: action.newMessageText,
                 time: '20:40'
             }
-            return {...state, messageData: [...state.messageData, newMessage], newMessageText: ''}
+            return {...state, messageData: [...state.messageData, newMessage]}
         }
-        case 'CHANGE-NEW-MESSAGE-TEXT':
-            if (action.newMessageText) {
-                return {...state, newMessageText: action.newMessageText}
-            }
     }
     return state
 }
 
-export const addMessageAC = () => (
-    {type: ADD_MESSAGE}
+export const addMessageAC = (newMessageText: string) => (
+    {type: ADD_MESSAGE, newMessageText: newMessageText}
 )
-
-export const changeNewMessageTextAC = (newMessageText: string) => (
-    {type: CHANGE_NEW_MESSAGE_TEXT, newMessageText: newMessageText}
-)
-

@@ -1,18 +1,6 @@
-import {
-    addMessageAC,
-    messagePageReducer,
-    changeNewMessageTextAC,
-    messageInitialState,
-    messagePageType
-} from './messagePageReducer';
+import {addMessageAC, messageInitialState, messagePageReducer, messagePageType} from './messagePageReducer';
 
 test('Message should be added', () => {
-    const resultState: messagePageType = messagePageReducer(messageInitialState, addMessageAC())
+    const resultState: messagePageType = messagePageReducer(messageInitialState, addMessageAC('text'))
     expect(resultState.messageData.length).toBe(8)
-})
-
-test('New message text should be changed', () => {
-    const newMessageText = 'Text'
-    const resultState: messagePageType = messagePageReducer(messageInitialState, changeNewMessageTextAC(newMessageText))
-    expect(resultState.newMessageText).toBe('Text')
 })
