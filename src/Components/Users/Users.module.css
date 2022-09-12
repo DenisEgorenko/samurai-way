@@ -1,17 +1,3 @@
 .usersWrapper {
 
 }
-
-.paginator {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.paginatorItem {
-    margin: 3px;
-}
-
-.paginatorItemSelected{
-    font-weight: bold;
-}

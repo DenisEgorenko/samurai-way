@@ -79,17 +79,22 @@ export const authThunk = () => (dispatch: AppDispatch) => {
     })
 }
 
-export const loginThunk = (email: string, password: string, rememberMe: boolean) => (dispatch: ThunkDispatch<RootState, undefined, any>) => {
-    authAPI.login(
-        email,
-        password,
-        rememberMe
-    ).then(res => {
+export const loginThunk = (email: string, password: string, rememberMe: boolean) => async (dispatch: ThunkDispatch<RootState, undefined, any>) => {
+
+    try {
+        const res = await authAPI.login(
+            email,
+            password,
+            rememberMe
+        )
+
         dispatch(setAuthFetchingAC())
         if (res.resultCode === 0) {
             dispatch(authThunk())
         } else {
             dispatch(stopSubmit('LoginForm', {_error: 'Error'}))
         }
-    })
+    } catch (e) {
+        console.log(e)
+    }
 }
